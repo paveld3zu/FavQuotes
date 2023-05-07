@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     private let urlString = "https://favqs.com/api/qotd"
     
@@ -29,8 +29,8 @@ extension ViewController {
             
             do {
                 let decoder = JSONDecoder()
-                let quotes = try decoder.decode(FQuote.self, from: data)
-                print(quotes)
+                let quote = try decoder.decode(FQuote.self, from: data)
+                print(quote)
             } catch {
                 print(error.localizedDescription)
             }
