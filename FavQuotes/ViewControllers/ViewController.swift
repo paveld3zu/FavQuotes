@@ -13,13 +13,13 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchQuotes()
+        fetchFQuote()
     }
 }
 
 // MARK: - Networking
 extension ViewController {
-    private func fetchQuotes() {
+    private func fetchFQuote() {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
