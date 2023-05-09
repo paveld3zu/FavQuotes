@@ -8,16 +8,31 @@
 import Foundation
 
 struct FQuote: Decodable {
-    let qotd_date: String
+    let qotdDate: String
     let quote: Quote
+    
+    enum CodingKeys: String, CodingKey {
+        case qotdDate = "qotd_date"
+        case quote = "quote"
+    }
 }
 
 struct Quote: Decodable {
     let author: String
     let url: String
-    let favorites_count: Int
-    let upvotes_count: Int
-    let downvotes_count: Int
+    let favoritesCount: Int
+    let upvotesCount: Int
+    let downvotesCount: Int
     let body: String
     let tags: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case author = "author"
+        case url = "url"
+        case favoritesCount = "favorites_count"
+        case upvotesCount = "upvotes_count"
+        case downvotesCount = "downvotes_count"
+        case body = "body"
+        case tags = "tags"
+    }
 }

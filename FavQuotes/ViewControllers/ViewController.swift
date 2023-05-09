@@ -9,11 +9,22 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    private let urlString = "https://favqs.com/api/qotd"
+    
+    
+    @IBOutlet var bodyLabel: UILabel!
+    @IBOutlet var favoritesLabel: UILabel!
+    @IBOutlet var upvotesLabel: UILabel!
+    @IBOutlet var downvotesLabel: UILabel!
+    @IBOutlet var tagsLabel: UILabel!
+    @IBOutlet var authorLabel: UILabel!
+    
+    @IBOutlet var getQuoteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchFQuote()
+    }
+    @IBAction func getQuoteButtonTapped(_ sender: UIButton) {
     }
 }
 
