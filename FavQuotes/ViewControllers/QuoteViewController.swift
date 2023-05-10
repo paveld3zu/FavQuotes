@@ -18,12 +18,21 @@ final class QuoteViewController: UIViewController {
     
     @IBOutlet var getQuoteButton: UIButton!
     
+    @IBOutlet var bodyActivityIndicator: UIActivityIndicatorView!
+    
     var quote: Quote!
     
     private let networkManager = NetworkManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bodyActivityIndicator.startAnimating()
+        bodyActivityIndicator.hidesWhenStopped = true
+        authorLabel.isHidden = true
+        tagsLabel.isHidden = true
+        fetchQuote()
+    }
+    @IBAction func refreshButtonTapped(_ sender: UIButton) {
         fetchQuote()
     }
 }
@@ -37,7 +46,7 @@ extension QuoteViewController {
                 print(error?.localizedDescription ?? "No error description")
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let quote = try decoder.decode(FQuote.self, from: data)
@@ -48,7 +57,10 @@ extension QuoteViewController {
                     self.upvotesLabel.text = String(quote.quote.upvotesCount)
                     self.downvotesLabel.text = String(quote.quote.downvotesCount)
                     self.tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
+                    self.tagsLabel.isHidden = false
                     self.authorLabel.text = "Author: \(quote.quote.author)"
+                    self.authorLabel.isHidden = false
+                    self.bodyActivityIndicator.stopAnimating()
                 }
             } catch {
                 print(error.localizedDescription)
