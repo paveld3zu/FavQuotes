@@ -22,8 +22,6 @@ final class QuoteViewController: UIViewController {
     
     var quote: Quote!
     
-    private let networkManager = NetworkManager.shared
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         bodyActivityIndicator.startAnimating()
