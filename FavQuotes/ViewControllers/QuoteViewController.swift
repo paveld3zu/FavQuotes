@@ -37,11 +37,10 @@ final class QuoteViewController: UIViewController {
     }
 }
 
-// MARK: - Networking
 extension QuoteViewController {
     private func fetchQuote() {
         guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let data else {
                 print(error?.localizedDescription ?? "No error description")
                 return
@@ -51,16 +50,17 @@ extension QuoteViewController {
                 let decoder = JSONDecoder()
                 let quote = try decoder.decode(FQuote.self, from: data)
                 print(quote)
+                
                 DispatchQueue.main.async {
-                    self.bodyLabel.text = quote.quote.body
-                    self.favoritesLabel.text = String(quote.quote.favoritesCount)
-                    self.upvotesLabel.text = String(quote.quote.upvotesCount)
-                    self.downvotesLabel.text = String(quote.quote.downvotesCount)
-                    self.tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
-                    self.tagsLabel.isHidden = false
-                    self.authorLabel.text = "Author: \(quote.quote.author)"
-                    self.authorLabel.isHidden = false
-                    self.bodyActivityIndicator.stopAnimating()
+                    self?.bodyLabel.text = quote.quote.body
+                    self?.favoritesLabel.text = String(quote.quote.favoritesCount)
+                    self?.upvotesLabel.text = String(quote.quote.upvotesCount)
+                    self?.downvotesLabel.text = String(quote.quote.downvotesCount)
+                    self?.tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
+                    self?.tagsLabel.isHidden = false
+                    self?.authorLabel.text = "Author: \(quote.quote.author)"
+                    self?.authorLabel.isHidden = false
+                    self?.bodyActivityIndicator.stopAnimating()
                 }
             } catch {
                 print(error.localizedDescription)

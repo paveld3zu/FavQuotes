@@ -46,7 +46,6 @@
 		680293232A069BD200BD7590 = {
 			isa = PBXGroup;
 			children = (
-				687902552A0BEBB400B80437 /* StartViewController.swift */,
 				6802932E2A069BD200BD7590 /* FavQuotes */,
 				6802932D2A069BD200BD7590 /* Products */,
 			);
@@ -63,10 +62,11 @@
 		6802932E2A069BD200BD7590 /* FavQuotes */ = {
 			isa = PBXGroup;
 			children = (
+				6840472F2A0C26C500041E6E /* Resources */,
+				6840472E2A0C268C00041E6E /* Services */,
 				680293432A069BE500BD7590 /* App */,
 				680293442A069BEC00BD7590 /* ViewControllers */,
 				680293452A069C4300BD7590 /* Storyboards */,
-				680293382A069BD400BD7590 /* Assets.xcassets */,
 				680293482A06A54400BD7590 /* Models */,
 			);
 			path = FavQuotes;
@@ -85,6 +85,7 @@
 		680293442A069BEC00BD7590 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				687902552A0BEBB400B80437 /* StartViewController.swift */,
 				680293332A069BD200BD7590 /* QuoteViewController.swift */,
 			);
 			path = ViewControllers;
@@ -102,10 +103,25 @@
 		680293482A06A54400BD7590 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				687902532A0AC93D00B80437 /* NetworkManager.swift */,
 				680293462A069C9C00BD7590 /* Quote.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6840472E2A0C268C00041E6E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				687902532A0AC93D00B80437 /* NetworkManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6840472F2A0C26C500041E6E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				680293382A069BD400BD7590 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
