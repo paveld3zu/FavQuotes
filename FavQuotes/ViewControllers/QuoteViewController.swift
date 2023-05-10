@@ -22,6 +22,8 @@ final class QuoteViewController: UIViewController {
     
     var quote: Quote!
     
+    private let networkManager = NetworkManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bodyActivityIndicator.startAnimating()
@@ -34,35 +36,31 @@ final class QuoteViewController: UIViewController {
         fetchQuote()
     }
 }
-
+// MARK: - Networking
 extension QuoteViewController {
     private func fetchQuote() {
         guard let url = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
+        networkManager.fetch(from: url) { [weak self] result in
+            switch result {
+            case .success(let quote):
+                self?.updateLabels(with: quote.quote)
+            case .failure(let error):
+                print(error)
             }
-            
-            do {
-                let decoder = JSONDecoder()
-                let quote = try decoder.decode(FQuote.self, from: data)
-                print(quote)
-                
-                DispatchQueue.main.async {
-                    self?.bodyLabel.text = quote.quote.body
-                    self?.favoritesLabel.text = String(quote.quote.favoritesCount)
-                    self?.upvotesLabel.text = String(quote.quote.upvotesCount)
-                    self?.downvotesLabel.text = String(quote.quote.downvotesCount)
-                    self?.tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
-                    self?.tagsLabel.isHidden = false
-                    self?.authorLabel.text = "Author: \(quote.quote.author)"
-                    self?.authorLabel.isHidden = false
-                    self?.bodyActivityIndicator.stopAnimating()
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-        }.resume()
+        }
+    }
+}
+// MARK: - UI Update
+extension QuoteViewController {
+    private func updateLabels(with quote: Quote) {
+        bodyLabel.text = quote.body
+        favoritesLabel.text = String(quote.favoritesCount)
+        upvotesLabel.text = String(quote.upvotesCount)
+        downvotesLabel.text = String(quote.downvotesCount)
+        tagsLabel.text = "Tags: \(quote.tags.joined(separator: ", "))"
+        tagsLabel.isHidden = false
+        authorLabel.text = "Author: \(quote.author)"
+        authorLabel.isHidden = false
+        bodyActivityIndicator.stopAnimating()
     }
 }
