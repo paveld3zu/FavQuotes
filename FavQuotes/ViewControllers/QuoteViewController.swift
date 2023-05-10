@@ -24,6 +24,7 @@ final class QuoteViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
     
+// MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bodyActivityIndicator.startAnimating()
@@ -32,6 +33,7 @@ final class QuoteViewController: UIViewController {
         tagsLabel.isHidden = true
         fetchQuote()
     }
+// MARK: - Actions
     @IBAction func refreshButtonTapped(_ sender: UIButton) {
         fetchQuote()
     }

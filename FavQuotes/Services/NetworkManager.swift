@@ -19,6 +19,7 @@ final class NetworkManager {
     
     private init() {}
     
+// MARK: - Networking
     func fetch(from url: URL, completion: @escaping(Result<FQuote, NetworkError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
