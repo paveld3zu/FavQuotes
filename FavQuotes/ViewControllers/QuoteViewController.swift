@@ -7,9 +7,7 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
-    
-    
+final class QuoteViewController: UIViewController {
     
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var favoritesLabel: UILabel!
@@ -20,28 +18,38 @@ final class ViewController: UIViewController {
     
     @IBOutlet var getQuoteButton: UIButton!
     
+    var quote: Quote!
+    
+    private let networkManager = NetworkManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchFQuote()
-    }
-    @IBAction func getQuoteButtonTapped(_ sender: UIButton) {
+        fetchQuote()
     }
 }
 
 // MARK: - Networking
-extension ViewController {
-    private func fetchFQuote() {
+extension QuoteViewController {
+    private func fetchQuote() {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 print(error?.localizedDescription ?? "No error description")
                 return
             }
-            
+
             do {
                 let decoder = JSONDecoder()
                 let quote = try decoder.decode(FQuote.self, from: data)
                 print(quote)
+                DispatchQueue.main.async {
+                    self.bodyLabel.text = quote.quote.body
+                    self.favoritesLabel.text = String(quote.quote.favoritesCount)
+                    self.upvotesLabel.text = String(quote.quote.upvotesCount)
+                    self.downvotesLabel.text = String(quote.quote.downvotesCount)
+                    self.tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
+                    self.authorLabel.text = "Author: \(quote.quote.author)"
+                }
             } catch {
                 print(error.localizedDescription)
             }
