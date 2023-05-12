@@ -41,8 +41,7 @@ final class QuoteViewController: UIViewController {
 // MARK: - Networking
 extension QuoteViewController {
     private func fetchQuote() {
-        guard let url = URL(string: urlString) else { return }
-        networkManager.fetch(from: url) { [weak self] result in
+        networkManager.fetch(from: Link.qotdURL.url) { [weak self] result in
             switch result {
             case .success(let quote):
                 self?.updateLabels(with: quote.quote)

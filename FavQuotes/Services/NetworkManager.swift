@@ -7,7 +7,16 @@
 
 import Foundation
 
-let urlString = "https://favqs.com/api/qotd"
+enum Link {
+    case qotdURL
+    
+    var url: URL {
+        switch self {
+        case .qotdURL:
+            return URL(string: "https://favqs.com/api/qotd")!
+        }
+    }
+}
 
 enum NetworkError: Error {
     case noData
