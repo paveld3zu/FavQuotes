@@ -18,8 +18,6 @@ final class QuoteViewController: UIViewController {
     
     @IBOutlet var bodyActivityIndicator: UIActivityIndicatorView!
     
-    var quote: FQuote!
-    
     private let networkManager = NetworkManager.shared
     
 // MARK: - Lifecycle

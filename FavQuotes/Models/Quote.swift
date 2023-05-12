@@ -23,7 +23,7 @@ struct FQuote: Decodable {
         quote = Quote(from: quoteData)
     }
     
-    static func getQuote(from value: Any) -> FQuote? {
+    static func getQuote(from value: Any) -> FQuote {
         guard let quoteData = value as? [String: Any] else {
             return FQuote(favoriteQuote: [:])
         }

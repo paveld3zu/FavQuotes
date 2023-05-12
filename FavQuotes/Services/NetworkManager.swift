@@ -38,7 +38,7 @@ final class NetworkManager {
                 switch dataResponse.result {
                 case .success(let value):
                     let quote = FQuote.getQuote(from: value)
-                    completion(.success(quote!))
+                    completion(.success(quote))
                 case .failure(let error):
                     completion(.failure(error))
                 }
