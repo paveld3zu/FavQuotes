@@ -49,14 +49,14 @@ extension QuoteViewController {
 }
 // MARK: - UI Update
 extension QuoteViewController {
-    private func updateLabels(with quote: FQuote) {
-        bodyLabel.text = quote.quote.body
-        favoritesLabel.text = String(quote.quote.favoritesCount)
-        upvotesLabel.text = String(quote.quote.upvotesCount)
-        downvotesLabel.text = String(quote.quote.downvotesCount)
-        tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
+    private func updateLabels(with fQuote: FQuote) {
+        bodyLabel.text = fQuote.quote.body
+        favoritesLabel.text = String(fQuote.quote.favoritesCount)
+        upvotesLabel.text = String(fQuote.quote.upvotesCount)
+        downvotesLabel.text = String(fQuote.quote.downvotesCount)
+        tagsLabel.text = "Tags: \(fQuote.quote.tags.joined(separator: ", "))"
         tagsLabel.isHidden = false
-        authorLabel.text = "Author: \(quote.quote.author)"
+        authorLabel.text = "Author: \(fQuote.quote.author)"
         authorLabel.isHidden = false
         bodyActivityIndicator.stopAnimating()
     }
