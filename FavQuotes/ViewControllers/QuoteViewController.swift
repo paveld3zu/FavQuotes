@@ -16,11 +16,9 @@ final class QuoteViewController: UIViewController {
     @IBOutlet var tagsLabel: UILabel!
     @IBOutlet var authorLabel: UILabel!
     
-    @IBOutlet var getQuoteButton: UIButton!
-    
     @IBOutlet var bodyActivityIndicator: UIActivityIndicatorView!
     
-    var quote: Quote!
+    var quote: FQuote!
     
     private let networkManager = NetworkManager.shared
     
@@ -41,10 +39,10 @@ final class QuoteViewController: UIViewController {
 // MARK: - Networking
 extension QuoteViewController {
     private func fetchQuote() {
-        networkManager.fetch(from: Link.qotdURL.url) { [weak self] result in
+        networkManager.fetchQuote(from: Link.qotdURL.url) { [weak self] result in
             switch result {
             case .success(let quote):
-                self?.updateLabels(with: quote.quote)
+                self?.updateLabels(with: quote)
             case .failure(let error):
                 print(error)
             }
@@ -53,14 +51,14 @@ extension QuoteViewController {
 }
 // MARK: - UI Update
 extension QuoteViewController {
-    private func updateLabels(with quote: Quote) {
-        bodyLabel.text = quote.body
-        favoritesLabel.text = String(quote.favoritesCount)
-        upvotesLabel.text = String(quote.upvotesCount)
-        downvotesLabel.text = String(quote.downvotesCount)
-        tagsLabel.text = "Tags: \(quote.tags.joined(separator: ", "))"
+    private func updateLabels(with quote: FQuote) {
+        bodyLabel.text = quote.quote.body
+        favoritesLabel.text = String(quote.quote.favoritesCount)
+        upvotesLabel.text = String(quote.quote.upvotesCount)
+        downvotesLabel.text = String(quote.quote.downvotesCount)
+        tagsLabel.text = "Tags: \(quote.quote.tags.joined(separator: ", "))"
         tagsLabel.isHidden = false
-        authorLabel.text = "Author: \(quote.author)"
+        authorLabel.text = "Author: \(quote.quote.author)"
         authorLabel.isHidden = false
         bodyActivityIndicator.stopAnimating()
     }

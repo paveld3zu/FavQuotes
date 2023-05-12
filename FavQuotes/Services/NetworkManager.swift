@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum Link {
     case qotdURL
@@ -28,24 +29,19 @@ final class NetworkManager {
     
     private init() {}
     
-// MARK: - Networking
-    func fetch(from url: URL, completion: @escaping(Result<FQuote, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let dataModel = try decoder.decode(FQuote.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(dataModel))
+    // MARK: - Networking
+    
+    func fetchQuote(from url: URL, completion: @escaping(Result<FQuote, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let quote = FQuote.getQuote(from: value)
+                    completion(.success(quote!))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(.decodingError))
             }
-        }.resume()
     }
 }
